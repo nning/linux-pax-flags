@@ -2,6 +2,7 @@
 #	henning mueller <henning@orgizm.net>
 
 pkgname=linux-pax-flags
+pkgdesc='Deactivates PaX flags for several binaries to work with "linux-pax"'
 pkgver=1.0.0
 pkgrel=1
 arch=(any)
