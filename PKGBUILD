@@ -10,7 +10,7 @@ url='https://aur.archlinux.org/packages.php?ID=55491'
 license=(GPL2)
 depends=(bash paxctl)
 source=($pkgname)
-md5sums=(f9032338a3c581566faf5723b241c575)
+md5sums=(6a6030054165e1cbddceece3a7568664)
 
 build() {
   return 0
