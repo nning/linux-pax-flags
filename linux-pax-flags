@@ -3,6 +3,10 @@
 declare -A perms
 
 perms=(
+	# RANDMMAP off
+	['PSMXEr']='
+		/usr/bin/grub-script-check
+	'
 	# MPROTECT and RANDMMAP off
 	['PSmXEr']='
 		/usr/lib/chromium/chromium
