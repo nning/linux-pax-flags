@@ -60,10 +60,12 @@ perms=(
 		/usr/bin/glxdemo
 		/usr/bin/glxgears
 		/usr/bin/glxinfo
+		/usr/bin/glxspheres
 		/usr/bin/kdeinit4
 		/usr/bin/kmail
 		/usr/bin/kwin
 		/usr/bin/mplayer
+		/usr/bin/okular
 		/usr/bin/qemu-system-alpha
 		/usr/bin/qemu-system-arm
 		/usr/bin/qemu-system-cris
@@ -122,6 +124,8 @@ perms=(
 	'
 	# All off
 	['psmxer']='
+		/opt/java/bin/java
+		/opt/java/bin/javac
 		/usr/bin/wine
 		/usr/bin/wine-preloader	
 		/usr/lib/jvm/java-6-openjdk/bin/java
