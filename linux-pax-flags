@@ -60,9 +60,9 @@ perms=(
 		/usr/bin/glxdemo
 		/usr/bin/glxgears
 		/usr/bin/glxinfo
+		/usr/bin/kdeinit4
 		/usr/bin/kmail
 		/usr/bin/kwin
-		/usr/bin/kdeinit4
 		/usr/bin/mplayer
 		/usr/bin/qemu-system-alpha
 		/usr/bin/qemu-system-arm
