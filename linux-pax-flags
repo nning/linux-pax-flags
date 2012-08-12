@@ -12,6 +12,7 @@ perms=(
 		/usr/lib/chromium/chromium
 		/usr/lib/firefox/firefox
 		/usr/lib/firefox/plugin-container
+		/usr/bin/pyrogenesis
 		/usr/lib/thunderbird/thunderbird
 	'
 	# PAGEEXEC and MPROTECT off
