@@ -4,13 +4,13 @@
 pkgname=linux-pax-flags
 pkgdesc='Deactivates PaX flags for several binaries to work with "linux-pax"'
 pkgver=1.0.24
-pkgrel=1
+pkgrel=2
 arch=(any)
 url='https://aur.archlinux.org/packages.php?ID=55491'
 license=(GPL2)
 depends=(bash paxctl)
 source=($pkgname)
-sha256sums=(b98e8b9aea7079a77a0e738b60cbf12e96bbdca051ee778f6d418e4b6b97784f)
+sha256sums=(71e9c75fec61e078b59dcbc07c3ff450b12359657f888609b89fa2585ec58de6)
 
 build() {
   return 0

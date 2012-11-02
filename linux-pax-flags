@@ -9,11 +9,12 @@ perms=(
 	'
 	# MPROTECT and RANDMMAP off
 	['cPSmXEr']='
-		/usr/lib/chromium/chromium
 		/usr/bin/elinks
+		/usr/bin/pyrogenesis
+		/usr/lib/chromium/chromium
 		/usr/lib/firefox/firefox
 		/usr/lib/firefox/plugin-container
-		/usr/bin/pyrogenesis
+		/usr/lib/polkit-1/polkitd
 		/usr/lib/thunderbird/thunderbird
 	'
 	# PAGEEXEC and MPROTECT off
