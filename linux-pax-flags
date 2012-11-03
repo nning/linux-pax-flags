@@ -71,6 +71,7 @@ perms=(
 		/usr/bin/glxinfo
 		/usr/bin/glxspheres
 		/usr/bin/kdeinit4
+		/usr/bin/kdenlive
 		/usr/bin/kmail
 		/usr/bin/kwin
 		/usr/bin/liferea
