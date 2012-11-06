@@ -2,9 +2,9 @@
 #   henning mueller <henning@orgizm.net>
 
 pkgname=linux-pax-flags
-pkgdesc='Deactivates PaX flags for several binaries to work with "linux-pax", "linux-grsec" and "linux-grsec-lts" kernels.'
+pkgdesc='Deactivates PaX flags for several binaries to work with PaX enabled kernels.'
 pkgver=1.0.25
-pkgrel=2
+pkgrel=3
 arch=(any)
 url='https://aur.archlinux.org/packages.php?ID=55491'
 license=(GPL2)
