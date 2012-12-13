@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'getoptlong'
+require 'readline'
 require 'singleton'
 require 'yaml'
 
@@ -38,7 +39,7 @@ class FlagsConfig < Hash
 end
 
 def usage
-  puts <<EOF
+  $stderr.puts <<EOF
 #{File.basename($0)} [options] [configs]
 
     -h, --help       This help.
@@ -55,15 +56,27 @@ options = GetoptLong.new(
   ['--yes',     '-y', GetoptLong::NO_ARGUMENT],
 )
 
-options.each do |option, argument|
-  case option
-    when '--help'
-      usage
-    when '--force'
-      force = true
-    when '--prepend'
-      prepend = true
+prepend = false
+yes = false
+
+begin
+  options.each do |option, argument|
+    case option
+      when '--help'
+        usage
+      when '--prepend'
+        prepend = true
+      when '--yes'
+        yes = true
+    end
   end
+rescue GetoptLong::InvalidOption => e
+  usage
+end
+
+if Process.uid != 0
+  $stderr << "Root privileges needed.\n"
+  exit 1
 end
 
 config_paths = if ARGV.empty?
@@ -97,5 +110,20 @@ end
 puts
 puts 'Continue writing PaX headers? [Y/n]'
 
-a = readline.chomp.downcase
-exit if a.downcase != 'y' unless a.empty?
+unless yes
+  a = Readline.readline.chomp.downcase
+  exit 1 if a.downcase != 'y' unless a.empty?
+end
+
+config.each do |flags, paths|
+  paths.each do |path|
+    if path.is_a? String
+      if File.exists? path
+        `paxctl -c#{flags} #{path}` unless prepend
+        print flags, ' ', path, "\n"
+      end
+    elsif path.is_a? Hash
+      p path
+    end
+  end
+end
