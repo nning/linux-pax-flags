@@ -1,0 +1,35 @@
+# Contributors:
+#   henning mueller <henning@orgizm.net>
+
+pkgname=linux-pax-flags
+pkgdesc='Deactivates PaX flags for several binaries to work with PaX enabled kernels.'
+pkgver=2.0.0
+pkgrel=1
+arch=(any)
+url='https://aur.archlinux.org/packages.php?ID=55491'
+license=(GPL3)
+depends=(ruby paxctl)
+source=(
+  $pkgname.rb
+  simple.conf
+  polkit.conf
+)
+sha256sums=(
+  3322ddc52ea6f3266e6d9f1a2ef5f60ce266f82d7146f9122fde7ec36d76c3ff
+  67420dddad9e12507c5f9b227f1f5a6db360c9f765322163661460fbc9e6f91b
+  9bca76b5b10de3e501487ed90b3cd95bf65b7233a430e7db31d548eb6926283f
+)
+
+build() {
+  return 0
+}
+
+package() {
+  install -D -m755 $srcdir/$pkgname.rb $pkgdir/usr/bin/$pkgname
+
+  for config in $srcdir/*.conf; do
+    install -D -m600 $config $pkgdir/usr/share/$pkgname/$(basename $config)
+  done
+
+  mkdir -p $pkgdir/etc/pax-flags
+}

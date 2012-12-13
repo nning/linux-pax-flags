@@ -25,7 +25,9 @@ def read_config():
 			if not section in config:
 				config[section] = []
 
-			config[section].extend(filter(None, cp.get(section, 'Paths').split("\n")))
+			paths = filter(None, cp.get(section, 'Paths').split("\n"))
+
+			config[section].extend(paths)
 
 		if cp.has_option(section, 'Path'):
 			path  = cp.get(section, 'Path')
@@ -50,11 +52,12 @@ def main():
 	for section in config:
 		for path in config[section]:
 			if os.path.exists(path):
-				if path in config:
-					subprocess.call(config[path][0].split(' '))
-				subprocess.call(['paxctl', '-' + section, path])
-				if path in config:
-					subprocess.call(config[path][1].split(' '))
+				#if path in config:
+				#	subprocess.call(config[path][0].split(' '))
+				#subprocess.call(['paxctl', '-' + section, path])
+				print(section + ' ' + path)
+				#if path in config:
+				#	subprocess.call(config[path][-1].split(' '))
 
 
 if __name__ == '__main__':
