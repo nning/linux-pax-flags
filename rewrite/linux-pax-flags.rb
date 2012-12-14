@@ -134,6 +134,11 @@ features. Please close all instances of them if you want to change the
 configuration for the following binaries:
 EOF
 
+# TODO A binary which has pre_ and post_command configured does not have to be
+#      shown here.
+#      Also, it would be good to list changes seperated between binaries which
+#      have to be terminated manually and those which have pre_ and
+#      post_command.
 each_entry config do |flags, entry, pattern, path|
   puts ' * ' + path if File.exists? path
 end
