@@ -5,6 +5,19 @@ require 'readline'
 require 'singleton'
 require 'yaml'
 
+class Array
+  # ["foo", {"foo" => 1}].cleanup => [{"foo" => 1}]
+  # If the key in a Hash element of an Array is also present as an element of
+  # the Array, delete the latter.
+  def cleanup
+    array = self.dup
+    self.grep(Hash).map(&:keys).flatten.each do |x|
+      array.delete x
+    end
+    array
+  end
+end
+
 # Class handles configuration parameters.
 class FlagsConfig < Hash
   # This is a singleton class.
@@ -25,7 +38,7 @@ class FlagsConfig < Hash
   # Merge Config Hash with Hash in YAML file.
   def merge_yaml! path
     merge!(load_file path) do |key, old, new|
-      (old + new).uniq if old.is_a? Array
+      (old + new).uniq.cleanup if old.is_a? Array and new.is_a? Array
     end
   end
 
@@ -48,6 +61,28 @@ def usage
 
 EOF
   exit 1
+end
+
+def each_entry config
+  config.each do |flags, entries|
+    entries.each do |entry|
+      if entry.is_a? String
+        pattern = entry
+      elsif entry.is_a? Hash
+        pattern = entry.keys.first
+      end
+
+      unless ENV['SUDO_USER'].nil?
+        paths = File.expand_path pattern.gsub('~', '~' + ENV['SUDO_USER'])
+      else
+        paths = File.expand_path pattern
+      end
+
+      Dir.glob(paths).each do |path|
+        yield flags, entry, pattern, path
+      end
+    end
+  end
 end
 
 options = GetoptLong.new(
@@ -99,12 +134,8 @@ features. Please close all instances of them if you want to change the
 configuration for the following binaries:
 EOF
 
-config.each do |flags, paths|
-  paths.each do |path|
-    if path.is_a? String and File.exists? path
-      puts ' * ' + path
-    end
-  end
+each_entry config do |flags, entry, pattern, path|
+  puts ' * ' + path if File.exists? path
 end
 
 puts
@@ -115,15 +146,11 @@ unless yes
   exit 1 if a.downcase != 'y' unless a.empty?
 end
 
-config.each do |flags, paths|
-  paths.each do |path|
-    if path.is_a? String
-      if File.exists? path
-        `paxctl -c#{flags} #{path}` unless prepend
-        print flags, ' ', path, "\n"
-      end
-    elsif path.is_a? Hash
-      p path
-    end
+each_entry config do |flags, entry, pattern, path|
+  if File.exists? path
+    `#{entry[pattern]['pre_command']}` if entry.is_a? Hash
+    `paxctl -c#{flags} "#{path}"` unless prepend
+    print flags, ' ', path, "\n"
+    `#{entry[pattern]['post_command']}` if entry.is_a? Hash
   end
 end
