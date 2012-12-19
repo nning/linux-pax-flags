@@ -146,6 +146,8 @@ end
 puts
 puts 'Continue writing PaX headers? [Y/n]'
 
+$stdout.flush
+
 unless yes
   a = Readline.readline.chomp.downcase
   exit 1 if a.downcase != 'y' unless a.empty?
@@ -153,9 +155,31 @@ end
 
 each_entry config do |flags, entry, pattern, path|
   if File.exists? path
-    `#{entry[pattern]['pre_command']}` if entry.is_a? Hash
+    e = entry[pattern]
+    actions = %w(status start stop)
+    start_again = false
+
+    status = e['status']
+    start  = e['start']
+    stop   = e['stop']
+
+    if e['type'] == 'systemd'
+      name = e['systemd_name'] || File.basename(path)
+      actions.each do |action|
+        eval "#{action} = \"systemctl #{action} #{name}.service\""
+      end
+    end
+
+    if entry.is_a? Hash
+      if status and system(status + '> /dev/null')
+        system stop unless prepend
+        start_again = true if start
+      end
+    end
+
     `paxctl -c#{flags} "#{path}"` unless prepend
     print flags, ' ', path, "\n"
-    `#{entry[pattern]['post_command']}` if entry.is_a? Hash
+
+    system start unless prepend if start_again
   end
 end
