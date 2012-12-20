@@ -11,20 +11,18 @@ license=(GPL3)
 depends=(ruby paxctl)
 source=(
   $pkgname.rb
-  simple.conf
-  polkit.conf
   clamd.conf
+  polkit.conf
+  simple.conf
+  steam.conf
 )
 sha256sums=(
   2f771afc22d38da0d96d41020075f8ec259805055a2690d1b55a1413c14cd525
-  67420dddad9e12507c5f9b227f1f5a6db360c9f765322163661460fbc9e6f91b
-  9c1ede626d29bb08dd4ee58440843c30ab9fc7f94906e3ef4a9936ae33f03b26
-  e2186de91752bf19b0a8ad981d005cb3f857489243e0ba839ad12fb4e8c03b60
+  8d8497f22808a7243c2efdb58c7a2b7cf2e1c78aed90596a408957d140af5874
+  5dbc16f447c0c8b73fdc153ae7c0dddd16ea1479ca7c93cff829944d416ef861
+  19e1dab1e10d27f59cf466986c1005a1bd1044a0b07e5285bc3596b3683c3004
+  387cf5d59a77a3bfbfebe8d00d7d5eaf1dac669286a6dfd20f60c084b3f322e0
 )
-
-build() {
-  return 0
-}
 
 package() {
   install -D -m755 $srcdir/$pkgname.rb $pkgdir/usr/bin/$pkgname
