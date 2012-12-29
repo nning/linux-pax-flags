@@ -10,6 +10,7 @@ url='https://aur.archlinux.org/packages.php?ID=55491'
 license=(GPL3)
 depends=(ruby paxctl)
 source=(
+  $pkgname.sh
   $pkgname.rb
   clamav.conf
   polkit.conf
@@ -17,6 +18,7 @@ source=(
   steam.conf
 )
 sha256sums=(
+  08eeb3adf70fe9f3398c71329f15dcd2499fb4ca66c4a56331943739cd3c211b
   04ed6c8c2fe7a5e30a210a1757ef81f0042ceb6bfc5b1edb9aa0a8f1b0a1f065
   d59c776bfc3f45e4058f36088520a21b92e2c0b6fd886844443c308a67592335
   5dbc16f447c0c8b73fdc153ae7c0dddd16ea1479ca7c93cff829944d416ef861
@@ -25,7 +27,8 @@ sha256sums=(
 )
 
 package() {
-  install -D -m755 $srcdir/$pkgname.rb $pkgdir/usr/bin/$pkgname
+  install -D -m755 $srcdir/$pkgname.sh $pkgdir/usr/bin/$pkgname
+  install -D -m755 $srcdir/$pkgname.rb $pkgdir/usr/bin/$pkgname.rb
 
   for config in $srcdir/*.conf; do
     install -D -m600 $config $pkgdir/usr/share/$pkgname/$(basename $config)
