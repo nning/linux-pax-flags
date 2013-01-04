@@ -96,6 +96,7 @@ perms=(
 		/usr/bin/cabal
 		/usr/bin/clamscan
 		/usr/bin/freshclam
+		/usr/bin/gendesk
 		/usr/bin/glxdemo
 		/usr/bin/glxgears
 		/usr/bin/glxinfo
@@ -108,6 +109,7 @@ perms=(
 		/usr/bin/mono
 		/usr/bin/mplayer
 		/usr/bin/okular
+		/usr/bin/python2
 		/usr/bin/qemu-system-alpha
 		/usr/bin/qemu-system-arm
 		/usr/bin/qemu-system-cris
