@@ -108,6 +108,7 @@ perms=(
 		/usr/bin/liferea
 		/usr/bin/mono
 		/usr/bin/mplayer
+		/usr/bin/mumble
 		/usr/bin/okular
 		/usr/bin/python2
 		/usr/bin/qemu-system-alpha
