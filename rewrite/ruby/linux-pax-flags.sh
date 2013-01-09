@@ -4,4 +4,6 @@
 	sudo paxctl -cm /usr/bin/ruby
 }
 
+sudo systemctl --system daemon-reload
+
 sudo linux-pax-flags.rb $@

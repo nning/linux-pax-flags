@@ -3,7 +3,7 @@
 
 pkgname=linux-pax-flags
 pkgdesc='Deactivates PaX flags for several binaries to work with PaX enabled kernels.'
-pkgver=2.0.0
+pkgver=2.0.1
 pkgrel=1
 arch=(any)
 url='https://aur.archlinux.org/packages.php?ID=55491'
@@ -18,8 +18,8 @@ source=(
   steam.conf
 )
 sha256sums=(
-  08eeb3adf70fe9f3398c71329f15dcd2499fb4ca66c4a56331943739cd3c211b
-  04ed6c8c2fe7a5e30a210a1757ef81f0042ceb6bfc5b1edb9aa0a8f1b0a1f065
+  8c275d489eba44960699be6064fd5ca75db599afccd9411c489ae1112fed3d23
+  ae40cde3a812025f48f1efbaecfca6884db8cc71f0964f018b00c78301e6f522
   d59c776bfc3f45e4058f36088520a21b92e2c0b6fd886844443c308a67592335
   5dbc16f447c0c8b73fdc153ae7c0dddd16ea1479ca7c93cff829944d416ef861
   1476049c5b6055566761eafd3fcaf8b6764d91d337e839d6a6cbd12653bec934

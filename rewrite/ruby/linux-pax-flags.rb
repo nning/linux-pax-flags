@@ -5,6 +5,7 @@ require 'readline'
 require 'singleton'
 require 'yaml'
 
+# Monkey-path the Array class.
 class Array
   # ["foo", {"foo" => 1}].cleanup => [{"foo" => 1}]
   # If the key in a Hash element of an Array is also present as an element of
@@ -51,33 +52,58 @@ class FlagsConfig < Hash
   end
 end
 
+# A method to print a beautiful usage message.
 def usage
   $stderr.puts <<EOF
-#{File.basename($0)} [options] [configs]
+#{File.basename($0)} [options] [filters]
 
+  OPTIONS
+
+    -c, --config     Override default configuration paths. Requires one
+                     argument. Can contain globs (escape them in some shells
+                     (zsh for example)). 
     -h, --help       This help.
     -p, --prepend    Do not change anything.
     -y, --yes        Non-interactive mode. Assume yes on questions.
+
+  FILTERS
+
+    Only change flags for paths, which contain one of these filters as a string.
 
 EOF
   exit 1
 end
 
-def each_entry config
+# This iterates each config entry (which mathes the filters). It yields flags,
+# entry, pattern and path of the config entry to the block code.
+def each_entry config, filters
   config.each do |flags, entries|
     entries.each do |entry|
+      # Distinguish easy (String) and complex (Hash) config entries.
       if entry.is_a? String
         pattern = entry
       elsif entry.is_a? Hash
         pattern = entry.keys.first
       end
 
+      # Skip this entry, if its path pattern does not contain one of the
+      # filters.
+      # TODO Do this for every matching path.
+      unless filters.empty?
+        temp_filters = filters.dup
+        temp_filters.keep_if { |filter| pattern.include? filter }
+        next if temp_filters.empty?
+      end
+
+      # If this runs with sudo, the ~ (for the users home path) have to point to
+      # the user who runs it, not to root.
       unless ENV['SUDO_USER'].nil?
         paths = File.expand_path pattern.gsub('~', '~' + ENV['SUDO_USER'])
       else
         paths = File.expand_path pattern
       end
 
+      # Now yield for every matching path.
       Dir.glob(paths).each do |path|
         yield flags, entry, pattern, path
       end
@@ -85,18 +111,25 @@ def each_entry config
   end
 end
 
+# Define the possible options.
 options = GetoptLong.new(
+  ['--config',  '-c', GetoptLong::REQUIRED_ARGUMENT],
   ['--help',    '-h', GetoptLong::NO_ARGUMENT],
   ['--prepend', '-p', GetoptLong::NO_ARGUMENT],
   ['--yes',     '-y', GetoptLong::NO_ARGUMENT],
 )
 
+# Initialize option variables.
+new_configs = []
 prepend = false
 yes = false
 
+# Set option variables.
 begin
   options.each do |option, argument|
     case option
+      when '--config'
+        new_configs = Dir.glob argument
       when '--help'
         usage
       when '--prepend'
@@ -109,44 +142,61 @@ rescue GetoptLong::InvalidOption => e
   usage
 end
 
+# Whatever is left over is a filter.
+filters = ARGV
+
+# Exit if we are not running with root privileges.
 if Process.uid != 0
   $stderr << "Root privileges needed.\n"
   exit 1
 end
 
-config_paths = if ARGV.empty?
+# Either default config paths or overridden ones.
+config_paths = if new_configs.empty?
   ['/etc/pax-flags/*.conf', '/usr/share/linux-pax-flags/*.conf']
 else
-  ARGV
+  new_configs
 end
 
+# Initialize the singleton config object...
 config = FlagsConfig.instance
 
+# ... and load every config file.
 config_paths.each do |path|
   Dir.glob(path).each do |file|
     config.load file
   end
 end
 
+# Helper text for simple entries.
 puts <<EOF
 Some programs do not work properly without deactivating some of the PaX
 features. Please close all instances of them if you want to change the
 configuration for the following binaries.
 EOF
 
-each_entry config do |flags, entry, pattern, path|
+# Show every simple entry.
+each_entry config, filters do |flags, entry, pattern, path|
   puts ' * ' + path if File.exists? path and entry.is_a? String
 end
 
-puts
+# Let us sum up the complex entries...
+autopaths = []
+each_entry config, filters do |flags, entry, pattern, path|
+  autopaths.push path if File.exists? path and entry.is_a? Hash
+end
 
-puts <<EOF
+# ... to decide, if we need to print them.
+unless autopaths.empty?
+  puts <<EOF
+
 For the following programs there are also changes neccessary but you do not have
 to close or restart instances of them manually.
 EOF
 
-each_entry config do |flags, entry, pattern, path|
-  puts ' * ' + path if File.exists? path and entry.is_a? Hash
+  autopaths.each do |path|
+    puts ' * ' + path
+  end
 end
 
 puts
@@ -159,16 +209,20 @@ unless yes
   exit 1 if a.downcase != 'y' unless a.empty?
 end
 
-each_entry config do |flags, entry, pattern, path|
+# Iterate each entry to actually set the flags.
+each_entry config, filters do |flags, entry, pattern, path|
   if File.exists? path
     e = entry[pattern]
     actions = %w(status start stop)
     start_again = false
 
+    # Get action commands from entries config.
     status = e['status']
     start  = e['start']
     stop   = e['stop']
 
+    # If the type attribute is set to systemd, we set the action command
+    # variables again but to systemd defaults.
     if e['type'] == 'systemd'
       name = e['systemd_name'] || File.basename(path)
       actions.each do |action|
@@ -176,6 +230,7 @@ each_entry config do |flags, entry, pattern, path|
       end
     end
 
+    # If the entry is complex, stop it if it is running.
     if entry.is_a? Hash
       if status and system(status + '> /dev/null')
         system stop unless prepend
@@ -183,9 +238,11 @@ each_entry config do |flags, entry, pattern, path|
       end
     end
 
+    # Set the flags and notify the user.
     `paxctl -c#{flags} "#{path}"` unless prepend
     print flags, ' ', path, "\n"
 
+    # Start the complex entries service again, if it is neccessary.
     system start unless prepend if start_again
   end
 end
