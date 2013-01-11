@@ -95,6 +95,7 @@ perms=(
 		/usr/bin/blender
 		/usr/bin/cabal
 		/usr/bin/clamscan
+		/usr/bin/dosbox
 		/usr/bin/freshclam
 		/usr/bin/gendesk
 		/usr/bin/glxdemo
