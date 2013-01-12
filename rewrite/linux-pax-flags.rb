@@ -91,7 +91,9 @@ def each_entry config, filters
       # TODO Do this for every matching path.
       unless filters.empty?
         temp_filters = filters.dup
-        temp_filters.keep_if { |filter| pattern.include? filter }
+        temp_filters.keep_if do |filter|
+          pattern.downcase.include? filter.downcase
+        end
         next if temp_filters.empty?
       end
 
