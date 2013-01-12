@@ -78,6 +78,7 @@ perms=(
 		$(homedir $SUDO_USER)/.steam/steam/SteamApps/common/Osmos/Osmos.bin32
 		$(homedir $SUDO_USER)/.steam/steam/SteamApps/common/Space*Pirates*and*Zombies/SPAZ
 		$(homedir $SUDO_USER)/.steam/steam/SteamApps/common/Superbrothers*Sword*&*Sworcery*EP/bin/swordandsworcery_pc
+		$(homedir $SUDO_USER)/.steam/steam/SteamApps/common/The*Journey*Down/JourneyDown1
 		$(homedir $SUDO_USER)/.steam/steam/SteamApps/common/Trine*2/bin/trine2_linux_*
 		$(homedir $SUDO_USER)/.steam/steam/SteamApps/common/Uplink/uplink.bin.x86
 		$(homedir $SUDO_USER)/.steam/steam/SteamApps/common/World*of*Goo/WorldOfGoo
