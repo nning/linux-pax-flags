@@ -10,18 +10,8 @@ url='https://aur.archlinux.org/packages.php?ID=55491'
 license=(GPL3)
 depends=(ruby paxctl)
 source=(
-  $pkgname.sh
-  $pkgname.rb
-  clamav.conf
-  games.conf
-  java.conf
-  kde.conf
-  polkit.conf
-  qemu.conf
-  ruby.conf
-  simple.conf
-  steam.conf
-  valgrind.conf
+  $pkgname.sh $pkgname.rb clamav.conf games.conf java.conf kde.conf polkit.conf
+  qemu.conf ruby.conf simple.conf steam.conf valgrind.conf
 )
 sha256sums=(
   6a946648999007bee1f48513a7f0ec91977c038ec59bee3ad19cebcdcabd48ac
@@ -34,7 +24,7 @@ sha256sums=(
   8d31a0c296ad2a3d5be8eb21d7716423553c1458f30163bb27453f54793ab2d2
   a8a7307dc640c1d7c9b17f6e6ed2dab53b89ffe7b3e432b1ced71a67fc182df4
   44ba6a9c4d8af908424f5027afc4f2e93634d16ffda54fd5cfb27aaf06ac4cfb
-  467bf43ba9dcafb2e76eeb2a6cd5364e6e73f64e33c3487c7ecdbd7aedb756fa
+  f5897580ec92dbdbb7c8a3e450e1ab006b7bc5a2bc2eb95a5829e554c4cbef7a
   94b64139cad2b55e09770b992d80a8e8bb6d0326cc5a9ec31b9b9a07e4091b25
 )
 
