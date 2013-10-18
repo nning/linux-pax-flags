@@ -12,9 +12,9 @@
 pkgname=linux-pax-flags
 pkgdesc='Deactivates PaX flags for several binaries to work with PaX enabled kernels.'
 pkgver=2.0.12
-pkgrel=1
+pkgrel=2
 arch=(any)
-url='https://aur.archlinux.org/packages.php?ID=55491'
+url='https://github.com/nning/linux-pax-flags'
 license=(GPL3)
 depends=(ruby paxctl)
 optdepends=('sudo: Run as root automatically.')
