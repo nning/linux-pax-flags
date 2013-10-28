@@ -65,7 +65,7 @@ def usage
     -h, --help       This help.
     -p, --prepend    Do not change anything.
     -y, --yes        Non-interactive mode. Assume yes on questions.
-    -x, --xattr      Sets the PAX flags through setfattr, underlying
+    -x, --xattr      Sets the PaX flags through setfattr, underlying
                      filesystems need xattr support.
 
   FILTERS
@@ -123,8 +123,8 @@ options = GetoptLong.new(
   ['--config',  '-c', GetoptLong::REQUIRED_ARGUMENT],
   ['--help',    '-h', GetoptLong::NO_ARGUMENT],
   ['--prepend', '-p', GetoptLong::NO_ARGUMENT],
-  ['--yes',     '-y', GetoptLong::NO_ARGUMENT],
   ['--xattr',   '-x', GetoptLong::NO_ARGUMENT],
+  ['--yes',     '-y', GetoptLong::NO_ARGUMENT],
 )
 
 # Initialize option variables.
@@ -143,10 +143,10 @@ begin
         usage
       when '--prepend'
         prepend = true
-      when '--yes'
-        yes = true
       when '--xattr'
         xattr = true
+      when '--yes'
+        yes = true
     end
   end
 rescue GetoptLong::InvalidOption => e
