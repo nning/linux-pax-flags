@@ -12,7 +12,7 @@
 pkgname=linux-pax-flags
 pkgdesc='Deactivates PaX flags for several binaries to work with PaX enabled kernels.'
 pkgver=2.0.14
-pkgrel=2
+pkgrel=3
 arch=(any)
 url='https://github.com/nning/linux-pax-flags'
 license=(GPL3)
@@ -21,7 +21,7 @@ optdepends=('sudo: Run as root automatically.')
 source=(
   $pkgname.sh $pkgname.rb $pkgname.8
   android.conf clamav.conf games.conf java.conf kde.conf polkit.conf qemu.conf
-  ruby.conf simple.conf skype.conf steam.conf valgrind.conf
+  ruby.conf simple.conf skype.conf steam.conf valgrind.conf wine.conf
 )
 
 package() {
@@ -47,7 +47,8 @@ sha256sums=('8581506830903ffcbb0876e4380d660ff044d9805d68f1432753c5bb99dc0db9'
             '1f205fddfb427a696fb00221a3007453e25fbbf180ea026c264d23eeac9e1870'
             '2736d0ef20d0127c34e132db38d8993dee3062ba0ac0cdf8d444a8d3665698b8'
             '6171eefd363f2c70bed9ac41fae3458d9e03460fdaf079c99445482e9649555a'
-            '9ace93b37cdba4f9644bb0f2422d0102adc628d79fd34618d66181d46c01bee1'
+            '016953a899755f34fcc75b836a1c37cb0aa224d4ae9950cb53da393a10a688d9'
             '459925589cc1c7b3c4e548c0ab30ae8c8780d093d6ff2bfc3c27e9712b032c9e'
             '3e81b3c85486a28379f148fd1132351d8d3c9b3677deb8b16be659dc9c12c5f9'
-            'ea003c4201745cd0c4bcf5cec5ca2d0a79cc6b1b04ceaa276ace0ad0287b8c50')
+            'ea003c4201745cd0c4bcf5cec5ca2d0a79cc6b1b04ceaa276ace0ad0287b8c50'
+            'd78fe0a02b5801c70e3d64045b12c3cbee358689da9082d71003b1cffda73ee3')
