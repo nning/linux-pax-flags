@@ -20,8 +20,9 @@ depends=(ruby paxctl)
 optdepends=('sudo: Run as root automatically.')
 source=(
   $pkgname.sh $pkgname.rb $pkgname.8
-  android.conf clamav.conf games.conf java.conf kde.conf polkit.conf qemu.conf
-  ruby.conf simple.conf skype.conf steam.conf valgrind.conf wine.conf
+  android.conf browsers.conf clamav.conf games.conf java.conf kde.conf
+  polkit.conf qemu.conf ruby.conf simple.conf skype.conf steam.conf
+  valgrind.conf wine.conf
 )
 
 package() {
@@ -40,6 +41,7 @@ sha256sums=('8581506830903ffcbb0876e4380d660ff044d9805d68f1432753c5bb99dc0db9'
             '4eaab9347a35c39f13e23866da943b21e4e26bc882b066ef504e4374d9a79311'
             '2020957abcd75d71b7f7dcca49eb3ff5f655eb69a306159eaf2e7d3a60c1ad5c'
             '7031e80b04bbc2a3f720b7d8e1d32bf9c972be0a7baebaa68bcf3cdfde94b45c'
+            '39fdd742247c9585c3a80c1e71e7cea077a1bde6ed4290d1c93d9c60dcf9e506'
             'bb87f4dce8e20f2ce601bdcb888dd688d8f0e9d0ab367e09c8081daffa15b03a'
             'c0b7b6c71490ba3a446db31598b78a8ccb1130f7fa181edb38aa022d9aa1076f'
             '71afe786955d149fe216ff1a60348562914a6820d3b7f9dc42aa44913062b04e'
@@ -47,7 +49,7 @@ sha256sums=('8581506830903ffcbb0876e4380d660ff044d9805d68f1432753c5bb99dc0db9'
             '1f205fddfb427a696fb00221a3007453e25fbbf180ea026c264d23eeac9e1870'
             '2736d0ef20d0127c34e132db38d8993dee3062ba0ac0cdf8d444a8d3665698b8'
             '6171eefd363f2c70bed9ac41fae3458d9e03460fdaf079c99445482e9649555a'
-            'fb46b6f34aa5543f85e82be612a76f7413bd0d1997b550581c31bd68d75ceb4e'
+            '6cee2ff270c3d4fdfa5c72e5efbe00a032788258ef16d5e6714d8c2bd7808989'
             '459925589cc1c7b3c4e548c0ab30ae8c8780d093d6ff2bfc3c27e9712b032c9e'
             'dd193445c6402056fac770e7e6704aecd039560d1d7394dd0345b1ba9ca60333'
             'ea003c4201745cd0c4bcf5cec5ca2d0a79cc6b1b04ceaa276ace0ad0287b8c50'
